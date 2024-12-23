@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -7,6 +7,8 @@
     <RootNamespace>Banking_System</RootNamespace>
     <UserSecretsId>cfaff36c-f7c2-44c3-847d-c635b7be48ea</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +22,29 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Application\Transaction\DTOs\" />
+    <Folder Include="Application\Transaction\Interfaces\" />
+    <Folder Include="Application\Transaction\UseCases\Account\" />
+    <Folder Include="Application\Transaction\UseCases\Transaction\" />
+    <Folder Include="Application\Account\DTOs\" />
+    <Folder Include="Application\Account\Interfaces\" />
+    <Folder Include="Application\Account\" />
+    <Folder Include="Application\Account\UseCases\Account\" />
+    <Folder Include="Application\Account\UseCases\Transaction\" />
+    <Folder Include="Core\IRepositories\" />
+    <Folder Include="Presentation\Configurations\" />
+    <Folder Include="Presentation\Middleware\" />
+    <Folder Include="Core\Services\" />
+    <Folder Include="Infrastructure\Repository\" />
+    <Folder Include="Tests\Application.Tests\UseCases\" />
+    <Folder Include="Tests\Core.Tests\Services\" />
+    <Folder Include="Tests\Infrastructure.Tests\" />
+    <Folder Include="Tests\IntegrationTests\" />
   </ItemGroup>
 
 </Project>

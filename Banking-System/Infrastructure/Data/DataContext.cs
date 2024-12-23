@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Banking_System.Models;
+using Banking_System.Core.Models;
 
-namespace Banking_System.Data
+namespace Banking_System.Infrastructure.Data
 {
     public class BankingDataContext : DbContext
     {
@@ -16,7 +16,7 @@ namespace Banking_System.Data
                 entity.HasKey(a => a.Id); // Primary Key
                 entity.Property(a => a.AccountNumber).IsRequired().HasMaxLength(20);
                 entity.Property(a => a.AccountType).IsRequired().HasMaxLength(20);
-                entity.Property(a => a.Balance).IsRequired();
+                entity.Property(a => a.Balance).HasDefaultValue(0);
                 entity.Property(a => a.OverDraftLimit).HasDefaultValue(0); // Default value 0
                 entity.Property(a => a.IntrestRate).HasDefaultValue(0.0f); // Default value 0.0
                 entity.Property(a => a.CreateAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
