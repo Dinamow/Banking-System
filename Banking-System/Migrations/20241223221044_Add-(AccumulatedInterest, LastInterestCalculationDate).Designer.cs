@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Banking_System.Migrations
 {
     [DbContext(typeof(BankingDataContext))]
-    [Migration("20241222235705_InitalCreate")]
-    partial class InitalCreate
+    [Migration("20241223221044_Add-(AccumulatedInterest, LastInterestCalculationDate)")]
+    partial class AddAccumulatedInterestLastInterestCalculationDate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Banking_System.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Banking_System.Models.Account", b =>
+            modelBuilder.Entity("Banking_System.Core.Models.Account", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,8 +43,13 @@ namespace Banking_System.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<decimal>("AccumulatedInterest")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("Balance")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreateAt")
                         .ValueGeneratedOnAdd()
@@ -55,6 +60,9 @@ namespace Banking_System.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("real")
                         .HasDefaultValue(0f);
+
+                    b.Property<DateTime>("LastInterestCalculationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("OverDraftLimit")
                         .ValueGeneratedOnAdd()
@@ -71,7 +79,7 @@ namespace Banking_System.Migrations
                     b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("Banking_System.Models.Transaction", b =>
+            modelBuilder.Entity("Banking_System.Core.Models.Transaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -112,15 +120,15 @@ namespace Banking_System.Migrations
                     b.ToTable("Transactions");
                 });
 
-            modelBuilder.Entity("Banking_System.Models.Transaction", b =>
+            modelBuilder.Entity("Banking_System.Core.Models.Transaction", b =>
                 {
-                    b.HasOne("Banking_System.Models.Account", null)
+                    b.HasOne("Banking_System.Core.Models.Account", null)
                         .WithMany()
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Banking_System.Models.Account", null)
+                    b.HasOne("Banking_System.Core.Models.Account", null)
                         .WithMany()
                         .HasForeignKey("TargetAccount")
                         .OnDelete(DeleteBehavior.Restrict)
