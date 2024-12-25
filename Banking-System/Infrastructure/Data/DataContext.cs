@@ -1,15 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Banking_System.Core.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Banking_System.Infrastructure.Data
 {
-    public class BankingDataContext : DbContext
+    public class BankingDataContext : IdentityDbContext<IdentityUser>
     {
         public BankingDataContext(DbContextOptions<BankingDataContext> options) : base(options) { }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             // Configure Account Entity
             modelBuilder.Entity<Account>(entity =>
             {
@@ -21,6 +25,12 @@ namespace Banking_System.Infrastructure.Data
                 entity.Property(a => a.IntrestRate).HasDefaultValue(0.0f); // Default value 0.0
                 entity.Property(a => a.CreateAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.Property(a => a.UpdateAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+
+                entity.HasOne(a => a.User)
+                      .WithMany()
+                      .HasForeignKey(a => a.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
 
             // Configure Transaction Entity
