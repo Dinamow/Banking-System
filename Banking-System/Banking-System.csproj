@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Banking_System</RootNamespace>
@@ -12,6 +12,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -27,15 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Transaction\DTOs\" />
-    <Folder Include="Application\Transaction\Interfaces\" />
-    <Folder Include="Application\Transaction\UseCases\Account\" />
-    <Folder Include="Application\Transaction\UseCases\Transaction\" />
     <Folder Include="Application\Account\DTOs\" />
     <Folder Include="Application\Account\Interfaces\" />
-    <Folder Include="Application\Account\" />
-    <Folder Include="Application\Account\UseCases\Account\" />
-    <Folder Include="Application\Account\UseCases\Transaction\" />
+    <Folder Include="Application\Account\UserCases\" />
+    <Folder Include="Application\Transaction\DTOs\" />
+    <Folder Include="Application\Transaction\Interfaces\" />
+    <Folder Include="Application\Transaction\UseCases\" />
     <Folder Include="Core\IRepositories\" />
     <Folder Include="Presentation\Configurations\" />
     <Folder Include="Presentation\Middleware\" />
