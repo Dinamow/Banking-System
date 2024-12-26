@@ -1,11 +1,14 @@
 using BankingSystem.Application.Account.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Banking_System.Presentation.Controllers
 {
     [ApiController]
     [Route("api/v1/")]
-    public class WeatherForecastController : ControllerBase
+    [Authorize]
+    public class Hello : ControllerBase
     {
         /// <summary>
         /// Returns a hello world message.
@@ -23,6 +26,9 @@ namespace Banking_System.Presentation.Controllers
             {
                 Hello = "World!"
             };
+            //print the user usernmae
+            var user = User.FindFirst(ClaimTypes.Name)?.Value;
+            Console.WriteLine(user);
             return Ok(response);
         }
     }
