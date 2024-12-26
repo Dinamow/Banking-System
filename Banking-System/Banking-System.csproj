@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
@@ -31,12 +32,13 @@
   <ItemGroup>
     <Folder Include="Application\Account\DTOs\" />
     <Folder Include="Application\Account\Interfaces\" />
+    <Folder Include="Application\Account\Mapping\" />
     <Folder Include="Application\Account\UserCases\" />
     <Folder Include="Application\Transaction\DTOs\" />
     <Folder Include="Application\Transaction\Interfaces\" />
+    <Folder Include="Application\Transaction\Mapping\" />
     <Folder Include="Application\Transaction\UseCases\" />
     <Folder Include="Core\IRepositories\" />
-    <Folder Include="Presentation\Configurations\" />
     <Folder Include="Presentation\Middleware\" />
     <Folder Include="Core\Services\" />
     <Folder Include="Infrastructure\Repository\" />
