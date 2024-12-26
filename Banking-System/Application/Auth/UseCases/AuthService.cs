@@ -19,7 +19,7 @@ namespace Banking_System.Application.Auth.UseCases
             _configuration = configuration;
         }
 
-        public async Task<RegisterResponseDTO> RegisterAsync(AuthRequestDTO request)
+        public async Task<RegisterResponseDTO> RegisterAsync(RegisterRequestDTO request)
         {
             if (string.IsNullOrEmpty(request.Email))
             {
