@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Banking_System.Application.Auth.DTOs;
 using Banking_System.Core.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Banking_System.Application.Auth.Mapping
 {
@@ -8,7 +9,7 @@ namespace Banking_System.Application.Auth.Mapping
     {
         public AuthMapping()
         {
-            CreateMap<Account, AuthResponseDTO>();
+            CreateMap<IdentityUser, AuthResponseDTO>();
         }
     }
 }
