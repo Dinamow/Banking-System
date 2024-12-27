@@ -12,6 +12,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Application\Account\UserCases\**" />
+    <Content Remove="Application\Account\UserCases\**" />
+    <EmbeddedResource Remove="Application\Account\UserCases\**" />
+    <None Remove="Application\Account\UserCases\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
@@ -27,13 +34,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.2.0" />
+    <PackageReference Include="System.Security.Claims" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Account\DTOs\" />
     <Folder Include="Application\Account\Interfaces\" />
-    <Folder Include="Application\Account\Mapping\" />
-    <Folder Include="Application\Account\UserCases\" />
     <Folder Include="Application\Transaction\DTOs\" />
     <Folder Include="Application\Transaction\Interfaces\" />
     <Folder Include="Application\Transaction\Mapping\" />

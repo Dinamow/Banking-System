@@ -1,5 +1,7 @@
 using Banking_System.Application.Auth.Interfaces;
 using Banking_System.Application.Auth.UseCases;
+using Banking_System.Application.Account.Interfaces;
+using Banking_System.Application.Account.UseCases;
 using Banking_System.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +16,7 @@ builder.Services.AddAutoMapperProfiles();
 
 // Add services to the container.
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAccountService, AcocuntService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
