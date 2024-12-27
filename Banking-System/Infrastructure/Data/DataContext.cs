@@ -8,14 +8,14 @@ namespace Banking_System.Infrastructure.Data
     public class BankingDataContext : IdentityDbContext<IdentityUser>
     {
         public BankingDataContext(DbContextOptions<BankingDataContext> options) : base(options) { }
-        public DbSet<Account> Accounts { get; set; }
+        public DbSet<BankingAccount> Accounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             // Configure Account Entity
-            modelBuilder.Entity<Account>(entity =>
+            modelBuilder.Entity<BankingAccount>(entity =>
             {
                 entity.HasKey(a => a.Id); // Primary Key
                 entity.Property(a => a.AccountNumber).IsRequired().HasMaxLength(20);
@@ -43,13 +43,13 @@ namespace Banking_System.Infrastructure.Data
                 entity.Property(t => t.UpdateAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 // Foreign Key Relationship
-                entity.HasOne<Account>()
+                entity.HasOne<BankingAccount>()
                       .WithMany()
                       .HasForeignKey(t => t.AccountId)
                       .OnDelete(DeleteBehavior.Cascade);
 
                 // Self-Referencing Relationship for Transfers
-                entity.HasOne<Account>()
+                entity.HasOne<BankingAccount>()
                       .WithMany()
                       .HasForeignKey(t => t.TargetAccount)
                       .OnDelete(DeleteBehavior.Restrict);
