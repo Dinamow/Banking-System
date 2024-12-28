@@ -39,7 +39,7 @@ public class AuthController : ControllerBase
         {
             return BadRequest(response);
         }
-        return CreatedAtAction(nameof(Login), _mapper.Map<AuthRequestDTO>(request));
+        return CreatedAtAction(nameof(Login), response);
     }
 
     /// <summary>

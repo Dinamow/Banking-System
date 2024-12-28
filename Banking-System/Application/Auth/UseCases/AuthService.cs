@@ -1,4 +1,5 @@
-﻿using Banking_System.Application.Auth.DTOs;
+﻿using Banking_System.Application.Account.UseCases;
+using Banking_System.Application.Auth.DTOs;
 using Banking_System.Application.Auth.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -11,12 +12,12 @@ namespace Banking_System.Application.Auth.UseCases
     public class AuthService : IAuthService
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly IConfiguration _configuration;
+        private readonly GenerateJwtTokenUseCase _generateJwtTokenUseCase;
 
-        public AuthService(UserManager<IdentityUser> userManager, IConfiguration configuration)
+        public AuthService(UserManager<IdentityUser> userManager, IConfiguration configuration, GenerateJwtTokenUseCase generateJwtTokenUseCase)
         {
             _userManager = userManager;
-            _configuration = configuration;
+            _generateJwtTokenUseCase = generateJwtTokenUseCase;
         }
 
         public async Task<RegisterResponseDTO> RegisterAsync(RegisterRequestDTO request)
@@ -69,23 +70,7 @@ namespace Banking_System.Application.Auth.UseCases
 
         private string GenerateJwtToken(IdentityUser user)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key is missing in appsettings.json")));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName ?? string.Empty),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-
-            var token = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],
-                claims: claims,
-                expires: DateTime.Now.AddHours(1),
-                signingCredentials: creds);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return _generateJwtTokenUseCase.Generate(user);
         }
     }
 }
