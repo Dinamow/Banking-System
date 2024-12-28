@@ -39,9 +39,6 @@
 
   <ItemGroup>
     <Folder Include="Application\Account\Interfaces\" />
-    <Folder Include="Application\Transaction\DTOs\" />
-    <Folder Include="Application\Transaction\Mapping\" />
-    <Folder Include="Application\Transaction\UseCases\" />
     <Folder Include="Core\IRepositories\" />
     <Folder Include="Presentation\Middleware\" />
     <Folder Include="Core\Services\" />
