@@ -10,7 +10,7 @@ namespace Banking_System.Core.Models
         [Required]
         public required string TransactionType { get; set; }
         [Required]
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
         [Required]
         public int TargetAccount { get; set; }
         public DateTime CreateAt { get; set; }
