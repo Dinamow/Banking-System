@@ -52,7 +52,8 @@ namespace Banking_System.Infrastructure.Data
                 entity.HasOne<BankingAccount>()
                       .WithMany()
                       .HasForeignKey(t => t.TargetAccount)
-                      .OnDelete(DeleteBehavior.Restrict);
+                      .OnDelete(DeleteBehavior.Restrict)
+                      .IsRequired(false);
             });
         }
     }
