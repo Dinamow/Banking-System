@@ -30,7 +30,7 @@ namespace Banking_System.Application.Account.UseCases
             }
             var account = new BankingAccount
             {
-                AccountNumber = Guid.NewGuid().ToString(),
+                AccountNumber = GenerateUniqueAccountNumberAsync().Result,
                 AccountType = type,
                 Balance = 0,
                 OverDraftLimit = 0,
@@ -68,6 +68,32 @@ namespace Banking_System.Application.Account.UseCases
             return await _context.Accounts
                 .Where(a => a.UserId == userId && a.AccountType == type)
                 .CountAsync() >= 2;
+        }
+        private async Task<string> GenerateUniqueAccountNumberAsync()
+        {
+            string accountNumber;
+            do
+            {
+                // Generate a random number or sequential number
+                accountNumber = $"ACCT-{new Random().Next(10000000, 99999999)}";
+            }
+            while (await _context.Accounts.AnyAsync(a => a.AccountNumber == accountNumber));
+
+            return accountNumber;
+        }
+
+        public Task<BankingAccount> GetMyAccountAsync(string UserId, int AccountId)
+        {
+            if (!AccountExistsAsync(AccountId).Result)
+            {
+                throw new InvalidOperationException("Account not found.");
+            }
+            var account = _context.Accounts.Find(AccountId);
+            if (account.UserId != UserId)
+            {
+                throw new InvalidOperationException("Account not found.");
+            }
+            return Task.FromResult(account);
         }
     }
 }
