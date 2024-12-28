@@ -18,7 +18,7 @@ namespace Banking_System.Infrastructure.Data
             modelBuilder.Entity<BankingAccount>(entity =>
             {
                 entity.HasKey(a => a.Id); // Primary Key
-                entity.Property(a => a.AccountNumber).IsRequired().HasMaxLength(20);
+                entity.HasIndex(a => a.AccountNumber).IsUnique();
                 entity.Property(a => a.AccountType).IsRequired().HasMaxLength(20);
                 entity.Property(a => a.Balance).HasDefaultValue(0);
                 entity.Property(a => a.OverDraftLimit).HasDefaultValue(0); // Default value 0
