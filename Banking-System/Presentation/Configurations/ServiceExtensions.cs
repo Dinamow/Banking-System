@@ -6,6 +6,8 @@ using Banking_System.Application.Transaction.Interfaces;
 using Banking_System.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Banking_System.Core.Interfaces;
+using Banking_System.Core.Services;
 
 public static class ServiceExtensions
 {
@@ -14,6 +16,7 @@ public static class ServiceExtensions
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<IBankingTransaction, BankingTransactions>();
+        services.AddScoped<IInterestService, InterestService>();
         services.AddScoped<GenerateJwtTokenUseCase>();
 
         return services;
