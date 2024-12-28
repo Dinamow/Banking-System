@@ -5,95 +5,100 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Banking_System.Application.Account.UseCases
 {
-    public class AcocuntService : IAccountService
+    public class AccountService : IAccountService
     {
-        public readonly BankingDataContext _context;
-        public AcocuntService(BankingDataContext context)
+        private readonly BankingDataContext _context;
+        private static readonly Random _random = new Random();
+
+        public AccountService(BankingDataContext context)
         {
             _context = context;
         }
-        public Task<bool> AccountExistsAsync(int id)
+
+        public async Task<bool> AccountExistsAsync(int id)
         {
-            return _context.Accounts.AnyAsync(A => A.Id == id);
+            return await _context.Accounts.AnyAsync(a => a.Id == id);
         }
 
-        public Task<BankingAccount> CreateAccountAsync(string UserId, string type)
+        public async Task<BankingAccount> CreateAccountAsync(string userId, string type)
         {
             if (type != "SavingAccount" && type != "CheckingAccount")
             {
                 throw new ArgumentException("Invalid account type. Must be 'SavingAccount' or 'CheckingAccount'.");
             }
 
-            if (HasTwoOrMoreAccountsOfTypeAsync(UserId, type).Result)
+            if (await HasTwoOrMoreAccountsOfTypeAsync(userId, type))
             {
                 throw new InvalidOperationException($"User already has two or more {type} accounts.");
             }
+
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+            {
+                throw new InvalidOperationException("User not found.");
+            }
+
             var account = new BankingAccount
             {
-                AccountNumber = GenerateUniqueAccountNumberAsync().Result,
+                AccountNumber = await GenerateUniqueAccountNumberAsync(),
                 AccountType = type,
                 Balance = 0,
                 OverDraftLimit = 0,
                 IntrestRate = 0,
                 AccumulatedInterest = 0,
-                LastInterestCalculationDate = DateTime.Now,
-                CreateAt = DateTime.Now,
-                UpdateAt = DateTime.Now,
-                UserId = UserId,
-                User = _context.Users.Find(UserId) ?? throw new InvalidOperationException("User not found.")
+                LastInterestCalculationDate = DateTime.UtcNow,
+                CreateAt = DateTime.UtcNow,
+                UpdateAt = DateTime.UtcNow,
+                UserId = userId,
+                User = user
             };
-            var result = _context.Accounts.Add(account);
-            _context.SaveChanges();
-            return Task.FromResult(result.Entity);
+
+            _context.Accounts.Add(account);
+            await _context.SaveChangesAsync();
+            return account;
         }
 
-        public Task<BankingAccount> GetAccountAsync(int id)
+        public async Task<BankingAccount> GetAccountAsync(int id)
         {
-            var account = _context.Accounts.Find(id);
+            var account = await _context.Accounts.FindAsync(id);
             if (account == null)
             {
                 throw new InvalidOperationException("Account not found.");
             }
-            return Task.FromResult(account);
+            return account;
         }
 
-        public Task<ICollection<BankingAccount>> GetMyAccountsAsync(string UserId)
+        public async Task<ICollection<BankingAccount>> GetMyAccountsAsync(string userId)
         {
-            var accounts = _context.Accounts.Where(a => a.UserId == UserId).ToList();
-            return Task.FromResult<ICollection<BankingAccount>>(accounts);
+            return await _context.Accounts.Where(a => a.UserId == userId).ToListAsync();
+        }
+
+        public async Task<BankingAccount> GetMyAccountAsync(string userId, int accountId)
+        {
+            var account = await _context.Accounts.FindAsync(accountId);
+            if (account == null || account.UserId != userId)
+            {
+                throw new InvalidOperationException("UnAuthrized");
+            }
+            return account;
         }
 
         private async Task<bool> HasTwoOrMoreAccountsOfTypeAsync(string userId, string type)
         {
             return await _context.Accounts
-                .Where(a => a.UserId == userId && a.AccountType == type)
-                .CountAsync() >= 2;
+                .CountAsync(a => a.UserId == userId && a.AccountType == type) >= 2;
         }
+
         private async Task<string> GenerateUniqueAccountNumberAsync()
         {
             string accountNumber;
             do
             {
-                // Generate a random number or sequential number
-                accountNumber = $"ACCT-{new Random().Next(10000000, 99999999)}";
+                accountNumber = $"ACCT-{_random.Next(10000000, 99999999)}";
             }
             while (await _context.Accounts.AnyAsync(a => a.AccountNumber == accountNumber));
 
             return accountNumber;
-        }
-
-        public Task<BankingAccount> GetMyAccountAsync(string UserId, int AccountId)
-        {
-            if (!AccountExistsAsync(AccountId).Result)
-            {
-                throw new InvalidOperationException("Account not found.");
-            }
-            var account = _context.Accounts.Find(AccountId);
-            if (account.UserId != UserId)
-            {
-                throw new InvalidOperationException("Account not found.");
-            }
-            return Task.FromResult(account);
         }
     }
 }
