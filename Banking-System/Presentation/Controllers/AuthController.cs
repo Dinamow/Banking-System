@@ -53,7 +53,7 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthResponseDTO))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [AllowAnonymous]
-    public async Task<IActionResult> Login(AuthRequestDTO request)
+    public async Task<IActionResult> Login([FromForm] AuthRequestDTO request)
     {
         if (!ModelState.IsValid)
         {
