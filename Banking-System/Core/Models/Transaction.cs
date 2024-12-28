@@ -2,7 +2,7 @@
 
 namespace Banking_System.Core.Models
 {
-    public class Transaction
+    public class BankingTransaction
     {
         public int Id { get; set; }
         [Required]

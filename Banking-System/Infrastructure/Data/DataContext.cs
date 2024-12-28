@@ -9,7 +9,7 @@ namespace Banking_System.Infrastructure.Data
     {
         public BankingDataContext(DbContextOptions<BankingDataContext> options) : base(options) { }
         public DbSet<BankingAccount> Accounts { get; set; }
-        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<BankingTransaction> Transactions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -34,7 +34,7 @@ namespace Banking_System.Infrastructure.Data
             });
 
             // Configure Transaction Entity
-            modelBuilder.Entity<Transaction>(entity =>
+            modelBuilder.Entity<BankingTransaction>(entity =>
             {
                 entity.HasKey(t => t.Id); // Primary Key
                 entity.Property(t => t.TransactionType).IsRequired().HasMaxLength(20);
