@@ -8,9 +8,9 @@ A Banking System with RESTful API and Database Persistence in ASP.NET Core Web A
 - [Features](#features)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
+- [Configuration](#configuration)
 - [Running the Application](#running-the-application)
 - [API Endpoints](#api-endpoints)
-- [Configuration](#configuration)
 - [License](#license)
 
 ## Introduction
@@ -42,7 +42,11 @@ Before you begin, ensure you have met the following requirements:
     cd Banking-System
     ```
 
-2. **Set up the database:**
+## Configuration
+
+Before running the application, update the configuration files as needed:
+
+1. **Set up the database:**
 
     Update the connection string in [appsettings.json](http://_vscodecontentref_/0) to point to your SQL Server instance:
 
@@ -54,7 +58,7 @@ Before you begin, ensure you have met the following requirements:
     }
     ```
 
-3. **Apply migrations:**
+2. **Apply migrations:**
 
     ```sh
     dotnet ef database update
@@ -115,31 +119,6 @@ Before you begin, ensure you have met the following requirements:
 - **Withdraw:** `POST /api/account/withdraw`
 - **Transfer:** `POST /api/account/transfer`
 
-## Configuration
-
-### [appsettings.json](http://_vscodecontentref_/3)
-
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Your SQL Server connection string here"
-  },
-  "Jwt": {
-    "Issuer": "http://localhost:5000",
-    "Audience": "http://localhost:5000",
-    "Key": "Your JWT secret key here",
-    "TokenValidityMins": 30
-  },
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning"
-    }
-  },
-  "AllowedHosts": "*"
-}
-```
-
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](http://_vscodecontentref_/4) file for details.
+This project is licensed under the MIT License.
