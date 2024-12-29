@@ -25,7 +25,7 @@ public static class ServiceExtensions
     public static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<BankingDataContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
 
         return services;
     }

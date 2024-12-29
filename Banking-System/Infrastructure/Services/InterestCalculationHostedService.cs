@@ -6,12 +6,11 @@ namespace Banking_System.Infrastructure.Services
     public class InterestCalculationHostedService : IHostedService, IDisposable
     {
         private readonly IServiceProvider _serviceProvider;
-        private Timer _timer;
+        private Timer? _timer;
 
-        public InterestCalculationHostedService(IServiceProvider serviceProvider, Timer timer)
+        public InterestCalculationHostedService(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            _timer = timer;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -40,11 +39,16 @@ namespace Banking_System.Infrastructure.Services
                 dbContext.SaveChanges();
             }
         }
+
         public Task StopAsync(CancellationToken cancellationToken)
         {
             _timer?.Change(Timeout.Infinite, 0);
             return Task.CompletedTask;
         }
-        public void Dispose() { _timer?.Dispose(); }
+
+        public void Dispose()
+        {
+            _timer?.Dispose();
+        }
     }
 }
