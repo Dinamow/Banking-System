@@ -1,4 +1,6 @@
+using Banking_System.Infrastructure.Data;
 using Banking_System.Infrastructure.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,4 +31,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<BankingDataContext>();
+    dbContext.Database.Migrate();
+}
 app.Run();
