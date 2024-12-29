@@ -44,25 +44,7 @@ Before you begin, ensure you have met the following requirements:
 
 ## Configuration
 
-Before running the application, update the configuration files as needed:
-
-1. **Set up the database:**
-
-    Update the connection string in [appsettings.json](http://_vscodecontentref_/0) to point to your SQL Server instance:
-
-    ```json
-    {
-      "ConnectionStrings": {
-        "DefaultConnection": "Your SQL Server connection string here"
-      }
-    }
-    ```
-
-2. **Apply migrations:**
-
-    ```sh
-    dotnet ef database update
-    ```
+Before running the application, no manual configuration is required. The application will automatically configure itself and apply the necessary database migrations upon startup.
 
 ## Running the Application
 
@@ -88,17 +70,17 @@ Before running the application, update the configuration files as needed:
 
 ### Using Docker
 
-1. Build the Docker image:
+1. Pull the prebuilt Docker image from Docker Hub:
 
-    ```sh
-    docker build -t banking-system .
-    ```
+   ```sh
+   docker pull dinamow/bankingsystem
+   ```
 
 2. Run the Docker container:
 
-    ```sh
-    docker run -p 8080:80 -p 8081:443 banking-system
-    ```
+   ```sh
+   docker run -p 8080:8080 -p 8081:8081 dinamow/bankingsystem
+   ```
 
 ## API Endpoints
 
