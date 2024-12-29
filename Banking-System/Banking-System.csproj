@@ -26,7 +26,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -35,18 +35,20 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.2.0" />
     <PackageReference Include="System.Security.Claims" Version="4.3.0" />
+    <PackageReference Include="xunit.assert" Version="2.9.2" />
+    <PackageReference Include="xunit.extensibility.core" Version="2.9.2" />
+	<PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
+	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Application\Account\Interfaces\" />
-    <Folder Include="Core\IRepositories\" />
+    <Folder Include="Migrations\" />
     <Folder Include="Presentation\Middleware\" />
-    <Folder Include="Core\Services\" />
-    <Folder Include="Infrastructure\Repository\" />
     <Folder Include="Tests\Application.Tests\UseCases\" />
-    <Folder Include="Tests\Core.Tests\Services\" />
     <Folder Include="Tests\Infrastructure.Tests\" />
     <Folder Include="Tests\IntegrationTests\" />
+    <Folder Include="Tests\Core.Tests\" />
   </ItemGroup>
 
 </Project>
